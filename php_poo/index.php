@@ -30,32 +30,29 @@
 
     <?php       
 
-        include_once("./metodo_atributo.php");
+        include_once("./Usuarios.php");
+        include_once("./Inserir_usuarios.php");
 
+        $listarUsuario = new Usuarios;
+        $resultUsuario = $listarUsuario -> listar();
 
-        $dados = filter_input_array(INPUT_POST,FILTER_DEFAULT);     
+        
+        foreach($resultUsuario as $queryrows){
 
-        $obj = new Usuario();
-
-
-        if(!empty($dados['enviar'])){
-
-            $nome = $obj -> nome = $dados['nome'];
-            $idade = $obj -> idade = $dados['idade'];
-            $email = $obj -> email = $dados['email'];
-
-            echo $obj -> cadastrar($nome, $idade, $email);
-
-            unset($dados);
-
+            extract($queryrows);
+            var_dump($queryrows);
+            
 
 
         }
 
-        echo "<hr>";
-        var_dump($dados['nome']);
+        $cadastrar_usuarios = new Inserir_usuarios();
+        $cadastrar_usuarios -> dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $cadastrar_usuarios -> cadastrar()
+       
 
 
+        
              
 
     
